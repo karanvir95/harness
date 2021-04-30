@@ -3,14 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{.Values.name}}-config
 data:
-  dbUsername: {{.Values.env.config.dbUsername}}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{.Values.name}}
-stringData:
-{{.Values.env.secrets | toYaml | indent 2}}
+  key: value
 ---
 {{- if .Values.createImagePullSecret}}
 apiVersion: v1
@@ -45,17 +38,20 @@ spec:
       containers:
       - name: {{.Values.name}}
         image: {{.Values.image}}
+#         readinessProbe:
+#           httpGet:
+#             scheme: HTTP
+#             path: /
+#             port: 8080
         envFrom:
         - configMapRef:
             name: {{.Values.name}}-config
-        - secretRef:
-            name: {{.Values.name}}
         resources:
           limits:
-            memory: 1024Mi
+            memory: 512Mi
             cpu: 100m
           requests:
-            memory: 1024Mi
+            memory: 512Mi
             cpu: 100m
         ports:
         - name: todolist
