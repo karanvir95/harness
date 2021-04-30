@@ -4,9 +4,11 @@ metadata:
   name: {{.Values.name}}-svc
 spec:
   type: LoadBalancer
+  loadBalancerSourceRanges: 
+  - 192.195.83.11/32 
   ports:
   - port: 80
-    targetPort: todolist
+    targetPort: 8080
     protocol: TCP
   selector:
     app: {{.Values.name}}
