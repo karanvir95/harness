@@ -3,7 +3,7 @@ replicas: 1
 image: <+artifact.image>
 
 
-createNamespace: true
+createNamespace: false
 namespace: <+infrastructure.namespace>
 
 # Service Type allow you to specify what kind of service you want.
